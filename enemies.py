@@ -14,6 +14,7 @@ MOVE_SPEED = 1
 
 bullet_manager = bullet.BulletManager()
 bullet_manager.move_direction = -90
+bullet_manager.bullet_color = "green"
 
 class EnemyManager(Turtle):
     def __init__(self):
@@ -41,24 +42,30 @@ class EnemyManager(Turtle):
             self.all_enemies.append(new_enemy)
 
     def move_enemies(self):
-        for enemy in self.all_enemies:
-            enemy.setheading(self.move_direction)
-            enemy.forward(MOVE_SPEED)
-            if self.all_enemies[0].xcor() == constants.LEFT_BARRIER:
-                self.move_direction = 0
-            if self.all_enemies[-1].xcor() == constants.RIGHT_BARRIER:
-                self.move_direction = 180
+        if len(self.all_enemies) > 0:
+            for enemy in self.all_enemies:
+                enemy.setheading(self.move_direction)
+                enemy.forward(MOVE_SPEED)
+                if enemy.xcor() == constants.LEFT_BARRIER:
+                    self.move_direction = 0
+                if enemy.xcor() == constants.RIGHT_BARRIER:
+                    self.move_direction = 180
+
 
     def create_bullet(self):
         # random_chance = random.randint(1,11)
         # if random_chance == 1:
-        random_position = random.choice(self.all_enemies[-11:])
-        bullet_manager.create_bullet(ycor=random_position.ycor(), xcor=random_position.xcor())
+        if self.all_enemies:
+            random_position = random.choice(self.all_enemies[-11:])
+            bullet_manager.create_bullet(ycor=random_position.ycor(), xcor=random_position.xcor())
 
 
     def shoot_bullets(self):
         for b in self.bullets:
             b.forward(self.shoot_speed)
+
+            if b.pos()[1] < -300:
+                self.bullets.remove(b)
 
 
 
