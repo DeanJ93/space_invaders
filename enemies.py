@@ -1,8 +1,10 @@
+from time import sleep
 from turtle import Turtle
 import random
 import turtle
 import constants
 import bullet
+
 
 ALIEN_IMAGE = "assets/alien.gif"
 turtle.register_shape(ALIEN_IMAGE)
@@ -19,11 +21,11 @@ bullet_manager.bullet_color = "green"
 class EnemyManager(Turtle):
     def __init__(self):
         super().__init__()
+        self.penup()
         self.all_enemies = []
         self.hideturtle()
         self.ycor = starting_ycor
         self.xcor = starting_xcor
-        self.create_enemies()
         #self.speed("slowest")
         self.move_direction = 180
         self.shoot_positions = []
@@ -33,6 +35,9 @@ class EnemyManager(Turtle):
     def create_enemies(self):
         for x in range(1,56):
             new_enemy = Turtle()
+            new_enemy.penup()
+            new_enemy.start_x = self.xcor  # Store original x position
+            new_enemy.start_y = self.ycor  # Store original y position
             new_enemy.shape(ALIEN_IMAGE)
             new_enemy.goto(x=self.xcor, y=self.ycor)
             self.xcor += 35
@@ -40,6 +45,14 @@ class EnemyManager(Turtle):
                 self.ycor -= 35
                 self.xcor = starting_xcor
             self.all_enemies.append(new_enemy)
+
+    def move_enemies_down(self):
+        for e in self.all_enemies:
+            # enemies will stop moving down before getting to close to player.
+            if e.ycor() > (constants.BOTTOM_BARRIER + 40):
+                y = e.ycor()
+                y -= 40
+                e.sety(y)
 
     def move_enemies(self):
         if len(self.all_enemies) > 0:
@@ -49,6 +62,8 @@ class EnemyManager(Turtle):
                 if enemy.xcor() == constants.LEFT_BARRIER:
                     self.move_direction = 0
                 if enemy.xcor() == constants.RIGHT_BARRIER:
+                    # move all enemies down
+                    self.move_enemies_down()
                     self.move_direction = 180
 
 
@@ -66,6 +81,14 @@ class EnemyManager(Turtle):
 
             if b.pos()[1] < -300:
                 self.bullets.remove(b)
+
+    def reset_enemies(self):
+        if len(self.all_enemies) > 0:
+            self.ycor = starting_ycor
+            self.xcor = starting_xcor
+            for e in self.all_enemies:
+                e.hideturtle()
+            self.all_enemies.clear()
 
 
 
