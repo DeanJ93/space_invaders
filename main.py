@@ -82,7 +82,7 @@ def start_game():
             enemy_manager.create_bullet()
         else:
             #detect collision with player
-            if enemy_manager.bullets[0].distance(player) < 15:
+            if enemy_manager.bullets[0].distance(player) < 35:
                 player.decrement_lives()
                 lives_manager.update_lives(player.lives)
 
@@ -101,6 +101,7 @@ def reset_game():
     scoreboard.score = 0
     scoreboard.update_scoreboard()
     enemy_manager.reset_enemies()
+    player.go_to_start()
 
     screen.update()
 
