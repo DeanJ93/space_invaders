@@ -6,6 +6,7 @@ import player
 from scoreboard import Scoreboard
 import lives_manager
 import enemies
+from sound_manager import play_sound
 from title_screen import TitleScreen
 
 turtle.colormode(255)
@@ -22,31 +23,13 @@ scoreboard = Scoreboard()
 lives_manager = lives_manager.LivesManager()
 enemy_manager = enemies.EnemyManager()
 
-# def show_title_screen(title: str):
-#     """Displays the start screen and waits for the player to press SPACE."""
-#     # Create a turtle for the start message
-#     start_turtle.color("white")
-#     start_turtle.penup()
-#     start_turtle.hideturtle()
-#     start_turtle.goto(0, 50)
-#     start_turtle.write(title, align="center", font=("Arial", 24, "bold"))
-#
-#     # Instructions
-#     start_turtle.goto(0, -20)
-#     start_turtle.write("Press SPACE to start or 'q' to exit", align="center", font=("Arial", 16, "normal"))
-#
-#     # Wait for space key to continue
-#     screen.listen()
-#     screen.onkey(start_game, "space")  # Call start_game() when SPACE is pressed
-#     screen.onkey(exit_game, "q")
-#     screen.mainloop()
-
 def exit_game():
     screen.bye()
 
 def start_game():
     title_screen.clear_screen()
     game_over_screen.clear_screen()
+
     screen.listen()
     screen.onkey(fun=player.move_left, key="Left")
     screen.onkey(fun=player.move_right, key="Right")
@@ -67,7 +50,7 @@ def start_game():
         #detect bullet collision with enemy
         for bullet in player.bullets:
             for enemy in enemy_manager.all_enemies:
-                if bullet.distance(enemy) < 35:
+                if bullet.distance(enemy) < 20:
                     enemy.hideturtle()
                     enemy_manager.all_enemies.remove(enemy)
                     bullet.hideturtle()
@@ -82,9 +65,11 @@ def start_game():
             enemy_manager.create_bullet()
         else:
             #detect collision with player
-            if enemy_manager.bullets[0].distance(player) < 35:
-                player.decrement_lives()
+            if enemy_manager.bullets[0].distance(player) < 20:
+                player.reset_player()
                 lives_manager.update_lives(player.lives)
+                time.sleep(1)
+                screen.update()
 
         enemy_manager.shoot_bullets()
 
@@ -108,10 +93,10 @@ def reset_game():
     start_game()
 
 title_screen = TitleScreen(screen=screen, start_func=start_game, exit_func=exit_game,
-                           title="SPACE INVADERS")
+                           text="SPACE INVADERS")
 
 title_screen.show_title_screen()
 
-game_over_screen = TitleScreen(screen=screen, start_func=reset_game, exit_func=exit_game, title="GAME OVER")
+game_over_screen = TitleScreen(screen=screen, start_func=reset_game, exit_func=exit_game, text="GAME OVER")
 
 screen.mainloop()

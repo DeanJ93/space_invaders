@@ -2,16 +2,19 @@ import turtle
 from turtle import Turtle
 import bullet
 import constants
-import winsound
+from sound_manager import play_sound
+import time
 
 SPACESHIP_IMAGE = "assets/spaceship2.gif"
 STARTING_POSITION = (0, constants.BOTTOM_BARRIER)
+shoot_sound = "assets/sounds/348164__djfroyd__laser-one-shot-1.wav"
 
 turtle.register_shape(SPACESHIP_IMAGE)
 bullet_manager = bullet.BulletManager()
 
 
 class Player(Turtle):
+    explosion_sound = "assets/sounds/medium-explosion-40472.mp3"
     def __init__(self):
         super().__init__()
         self.penup()
@@ -33,12 +36,17 @@ class Player(Turtle):
             self.forward(10)
 
     def create_bullet(self):
-        winsound.PlaySound('assets/sounds/348164__djfroyd__laser-one-shot-1.wav', winsound.SND_ASYNC)
+        play_sound(shoot_sound)
         bullet_manager.create_bullet(ycor=self.ycor() + 30, xcor=self.xcor())
 
     def shoot_bullets(self):
         for b in self.bullets:
             b.forward(self.shoot_speed)
+
+    def reset_player(self):
+        self.go_to_start()
+        self.decrement_lives()
+        play_sound(sound_file=self.explosion_sound)
 
     @property
     def lives(self):
@@ -52,4 +60,5 @@ class Player(Turtle):
     def decrement_lives(self):
         if self.lives > 0:
             self._lives -= 1
+
 
