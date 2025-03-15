@@ -1,4 +1,4 @@
 /.idea
 /__pycache__
 venv/
-high_score.txt
+space_invaders/high_score.txt
