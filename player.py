@@ -21,7 +21,7 @@ class Player(Turtle):
         self.penup()
         self.shape(SPACESHIP_IMAGE)
         self.go_to_start()
-        self._lives = 5
+        self._lives = 10
         self.bullets = bullet_manager.all_bullets
         self.shoot_speed = 40
 
