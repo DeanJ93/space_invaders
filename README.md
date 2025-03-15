@@ -24,7 +24,7 @@ pip install -r requirements.txt
 - Press the **space bar** to shoot.
 
 ## Starting the Game
-Run the following command:
+Navigate to the space_invaders folder. Then run the following command:
 ```sh
 python space_invaders.py
 ```
