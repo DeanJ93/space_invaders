@@ -5,6 +5,10 @@ I built this game to practice game development with Turtle Graphics and OOP. I w
 
 This game uses Pygame to play the sound effects for cross-platform compatibility. I've only tested it on Windows though.
 
+![Title Screen](screenshots/titlescreen.png)
+
+![Gameplay](screenshots/gameplay.png)
+
 ## Requirements
 - Python must be installed
 - Pygame must be installed
