@@ -1,20 +1,18 @@
-import turtle
 from turtle import Screen
 import time
+import os
 
 import player
 from scoreboard import Scoreboard
 import lives_manager
 import enemies
-from sound_manager import play_sound
 from title_screen import TitleScreen
-
-turtle.colormode(255)
+from barrier import Barrier
 
 screen = Screen()
 screen.setup(800, 600)
 screen.title("Space Invaders")
-screen.bgpic("assets/background2.gif")
+screen.bgpic(os.path.join("assets", "images", "background2.gif"))
 screen.tracer(0)
 
 
@@ -22,6 +20,8 @@ player = player.Player()
 scoreboard = Scoreboard()
 lives_manager = lives_manager.LivesManager()
 enemy_manager = enemies.EnemyManager()
+
+barrier = Barrier()
 
 def exit_game():
     screen.bye()
@@ -37,8 +37,17 @@ def start_game():
 
     enemy_manager.create_enemies()
 
+    barrier.create_barrier()
+
     game_is_on = True
     while game_is_on:
+        #respawn enemies after they are all killed
+        if len(enemy_manager.all_enemies) == 0:
+            enemy_manager.reset_enemies()
+            enemy_manager.create_enemies()
+            barrier.reset_barrier()
+            barrier.create_barrier()
+
         time.sleep(0.1)
         screen.update()
         lives_manager.update_lives(player.lives)
@@ -50,7 +59,7 @@ def start_game():
         #detect bullet collision with enemy
         for bullet in player.bullets:
             for enemy in enemy_manager.all_enemies:
-                if bullet.distance(enemy) < 20:
+                if bullet.distance(enemy) < 30:
                     enemy.hideturtle()
                     enemy_manager.all_enemies.remove(enemy)
                     bullet.hideturtle()
@@ -66,10 +75,21 @@ def start_game():
         else:
             #detect collision with player
             if enemy_manager.bullets[0].distance(player) < 20:
-                player.reset_player()
                 lives_manager.update_lives(player.lives)
-                time.sleep(1)
+                player.reset_player()
+                time.sleep(2)
                 screen.update()
+
+        #detect bullet collision with barrier
+        bullet_lists = [player.bullets, enemy_manager.bullets]
+        for list in bullet_lists:
+            for bullet in list:
+                barrier_hit = barrier.check_collision(bullet)
+                if barrier_hit:
+                    bullet.hideturtle()
+                    list.remove(bullet)
+
+
 
         enemy_manager.shoot_bullets()
 
@@ -80,6 +100,7 @@ def start_game():
         if not game_is_on:
             scoreboard.save_high_score()
             game_over_screen.show_title_screen()
+            barrier.reset_barrier()
 
 def reset_game():
     player.lives = 3

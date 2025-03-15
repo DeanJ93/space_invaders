@@ -22,3 +22,8 @@ class BulletManager(Turtle):
         new_bullet.setheading(self.move_direction)
         self.all_bullets.append(new_bullet)
 
+    def remove_bullet(self, bullet):
+        bullet.hideturtle()
+        self.all_bullets.remove(bullet)
+
+

@@ -1,15 +1,13 @@
-from time import sleep
 from turtle import Turtle
 import random
 import turtle
+import os
+
 import constants
 import bullet
 
-
-ALIEN_IMAGE = "assets/alien.gif"
+ALIEN_IMAGE = os.path.join("assets","images", "alien.gif")
 turtle.register_shape(ALIEN_IMAGE)
-# LEFT_BARRIER = -150
-# RIGHT_BARRIER = 150
 starting_xcor = -150
 starting_ycor = 150
 MOVE_SPEED = 1
@@ -30,7 +28,7 @@ class EnemyManager(Turtle):
         self.move_direction = 180
         self.shoot_positions = []
         self.bullets = bullet_manager.all_bullets
-        self.shoot_speed = 30
+        self.shoot_speed = 40
 
     def create_enemies(self):
         for x in range(1,56):
@@ -49,7 +47,7 @@ class EnemyManager(Turtle):
     def move_enemies_down(self):
         for e in self.all_enemies:
             # enemies will stop moving down before getting to close to player.
-            if e.ycor() > (constants.BOTTOM_BARRIER + 40):
+            if e.ycor() > (constants.BOTTOM_BARRIER + 80):
                 y = e.ycor()
                 y -= 40
                 e.sety(y)
@@ -83,9 +81,9 @@ class EnemyManager(Turtle):
                 self.bullets.remove(b)
 
     def reset_enemies(self):
+        self.ycor = starting_ycor
+        self.xcor = starting_xcor
         if len(self.all_enemies) > 0:
-            self.ycor = starting_ycor
-            self.xcor = starting_xcor
             for e in self.all_enemies:
                 e.hideturtle()
             self.all_enemies.clear()
