@@ -7,14 +7,14 @@ import os
 
 SPACESHIP_IMAGE = os.path.join("assets", "images", "spaceship2.gif")
 STARTING_POSITION = (0, constants.BOTTOM_BARRIER)
-shoot_sound = os.path.join("assets","sounds","348164__djfroyd__laser-one-shot-1.wav")
+SHOOT_SOUND = os.path.join("assets", "sounds", "348164__djfroyd__laser-one-shot-1.wav")
+EXPLOSION_SOUND = os.path.join("assets","sounds","medium-explosion-40472.wav")
 
 turtle.register_shape(SPACESHIP_IMAGE)
 bullet_manager = bullet.BulletManager()
 
 
 class Player(Turtle):
-    explosion_sound = os.path.join("assets","sounds","medium-explosion-40472.mp3")
 
     def __init__(self):
         super().__init__()
@@ -38,7 +38,7 @@ class Player(Turtle):
 
     def create_bullet(self):
         if len(self.bullets) == 0:
-            play_sound(shoot_sound)
+            play_sound(SHOOT_SOUND)
             bullet_manager.create_bullet(ycor=self.ycor() + 30, xcor=self.xcor())
 
     def shoot_bullets(self):
@@ -48,7 +48,7 @@ class Player(Turtle):
     def reset_player(self):
         self.go_to_start()
         self.decrement_lives()
-        play_sound(sound_file=self.explosion_sound)
+        play_sound(sound_file=EXPLOSION_SOUND)
 
     @property
     def lives(self):
