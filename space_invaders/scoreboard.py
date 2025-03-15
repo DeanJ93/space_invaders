@@ -1,13 +1,11 @@
 from turtle import Turtle
 import os
 
-import constants
+from constants import SCRIPT_DIR, FONT
 
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ALIGNMENT = "center"
 POSITION = (0, 260)
 HIGH_SCORE_FILE = os.path.join(SCRIPT_DIR, "high_score.txt")
-FONT = ('Arial', 25, 'bold')
 
 class Scoreboard(Turtle):
     def __init__(self):
@@ -51,7 +49,7 @@ class Scoreboard(Turtle):
 
     def update_scoreboard(self):
         self.clear()
-        self.write(f"Score: {self._score}      High Score: {self._high_score}", align=ALIGNMENT, font=constants.FONT)
+        self.write(f"Score: {self._score}      High Score: {self._high_score}", align=ALIGNMENT, font=FONT)
 
     def save_high_score(self):
         self.set_high_score()

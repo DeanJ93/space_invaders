@@ -1,8 +1,8 @@
 from turtle import Turtle
-import constants
+from constants import LEFT_BARRIER
 
 starting_ycor = -150
-starting_xcor = (constants.LEFT_BARRIER - 20)
+starting_xcor = (LEFT_BARRIER - 20)
 
 class Barrier:
     def __init__(self):

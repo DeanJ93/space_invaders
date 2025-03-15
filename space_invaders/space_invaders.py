@@ -8,11 +8,12 @@ import lives_manager
 import enemies
 from title_screen import TitleScreen
 from barrier import Barrier
+from constants import SCRIPT_DIR
 
 screen = Screen()
 screen.setup(800, 600)
 screen.title("Space Invaders")
-screen.bgpic(os.path.join("assets", "images", "background2.gif"))
+screen.bgpic(os.path.join(SCRIPT_DIR, "assets", "images", "background2.gif"))
 screen.tracer(0)
 
 
@@ -90,7 +91,7 @@ def start_game():
                     list.remove(bullet)
 
 
-
+        player.remove_bullet()
         enemy_manager.shoot_bullets()
 
         # end game if player lives have depleted

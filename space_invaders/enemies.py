@@ -3,10 +3,10 @@ import random
 import turtle
 import os
 
-import constants
+from constants import SCRIPT_DIR, BOTTOM_BARRIER, LEFT_BARRIER, RIGHT_BARRIER
 import bullet
 
-ALIEN_IMAGE = os.path.join("assets","images", "alien.gif")
+ALIEN_IMAGE = os.path.join(SCRIPT_DIR,"assets", "images", "alien.gif")
 turtle.register_shape(ALIEN_IMAGE)
 starting_xcor = -150
 starting_ycor = 150
@@ -47,7 +47,7 @@ class EnemyManager(Turtle):
     def move_enemies_down(self):
         for e in self.all_enemies:
             # enemies will stop moving down before getting to close to player.
-            if e.ycor() > (constants.BOTTOM_BARRIER + 80):
+            if e.ycor() > (BOTTOM_BARRIER + 80):
                 y = e.ycor()
                 y -= 40
                 e.sety(y)
@@ -57,9 +57,9 @@ class EnemyManager(Turtle):
             for enemy in self.all_enemies:
                 enemy.setheading(self.move_direction)
                 enemy.forward(MOVE_SPEED)
-                if enemy.xcor() == constants.LEFT_BARRIER:
+                if enemy.xcor() == LEFT_BARRIER:
                     self.move_direction = 0
-                if enemy.xcor() == constants.RIGHT_BARRIER:
+                if enemy.xcor() == RIGHT_BARRIER:
                     # move all enemies down
                     self.move_enemies_down()
                     self.move_direction = 180

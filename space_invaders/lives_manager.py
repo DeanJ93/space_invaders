@@ -1,5 +1,5 @@
 from turtle import Turtle
-import constants
+from constants import FONT
 
 ALIGNMENT = "Left"
 POSITION = (-100, -280)
@@ -14,4 +14,4 @@ class LivesManager(Turtle):
 
     def update_lives(self, lives):
         self.clear()
-        self.write(f"Lives: {lives}", align=ALIGNMENT, font=constants.FONT)
+        self.write(f"Lives: {lives}", align=ALIGNMENT, font=FONT)
