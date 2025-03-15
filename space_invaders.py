@@ -64,7 +64,7 @@ def start_game():
                     enemy_manager.all_enemies.remove(enemy)
                     bullet.hideturtle()
                     player.bullets.remove(bullet)
-                    scoreboard.add_score(1)
+                    scoreboard.add_score(10)
                     scoreboard.update_scoreboard()
                     break
 
