@@ -37,5 +37,7 @@ I'm still learning OOP so this might not be the best implementation. I may consi
 ### Sound Effects
 - laser one-shot #1.wav by djfroyd -- https://freesound.org/s/348164/ -- License: Attribution 3.0
 - medium-explosion-40472.wav -- Sound Effect by <a href="https://pixabay.com/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=40472">freesound_community</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=40472">Pixabay</a>
+
+### Images
 - alien.gif -- <a href="https://codeheir.com/2019/03/17/how-to-code-space-invaders-1978-7/">Codeheir</a>
 - spaceship2.gif -- <a href="https://www.pngall.com/space-invaders-png/download/114457/">PNG ALL</a>
